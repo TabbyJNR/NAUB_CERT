@@ -330,3 +330,74 @@ At minimum, document:
 - Incident/debug checklist
 
 This becomes your operational “single source of truth” for Firebase + Firestore access and configuration.
+
+---
+
+## 7) Phase 0 execution plan (foundation setup)
+
+Use this phase to establish the baseline environment before any smart contract or frontend feature implementation.
+
+### Phase 0 objectives
+
+- Provision Firebase environments (`dev`, `staging`, `prod`) with clear ownership.
+- Establish secure authentication and Firestore access boundaries.
+- Confirm emulator-first local workflow works for all contributors.
+- Produce a signed-off runbook with all required configuration values.
+
+### Phase 0 workstreams
+
+#### 0.1 Environment provisioning
+
+- Create three separate Firebase projects (or approved equivalent isolation strategy).
+- Enable Firestore in **Native mode** for each environment.
+- Record region/location decisions with compliance rationale.
+- Confirm billing, quotas, and budget alerts are enabled.
+
+#### 0.2 Identity and access baseline
+
+- Enable required Firebase Auth providers for early testing.
+- Configure authorized domains for each environment.
+- Create service accounts for CI/CD and backend runtime.
+- Apply least-privilege IAM roles; avoid broad owner access.
+
+#### 0.3 Security controls baseline
+
+- Publish non-permissive Firestore Rules (no `allow ...: if true`).
+- Configure initial composite indexes needed by known queries.
+- Store secrets in Secret Manager/CI secret store (never in repo).
+- Validate audit logging visibility in Cloud Logging.
+
+#### 0.4 Local developer workflow
+
+- Configure Firebase Emulator Suite (`firestore`, `auth`, optionally `functions`).
+- Standardize required local env vars in project documentation.
+- Run smoke tests for auth + Firestore read/write against emulator.
+- Verify unauthorized access is denied by rules tests.
+
+#### 0.5 Documentation and sign-off
+
+- Populate environment matrix with all config values from Section 1.
+- Document access request/approval process for privileged roles.
+- Define key rotation and incident response contacts.
+- Obtain phase sign-off from technical lead and security/compliance reviewer.
+
+### Phase 0 Definition of Done (DoD)
+
+Phase 0 is complete only when all items below are true:
+
+- [ ] `dev`, `staging`, and `prod` Firebase projects are provisioned and named consistently.
+- [ ] Firestore databases exist in approved regions and mode is confirmed.
+- [ ] Auth providers and authorized domains are configured per environment.
+- [ ] Service accounts and IAM bindings are applied with least privilege.
+- [ ] Firestore Security Rules are published and emulator-tested.
+- [ ] Required indexes are created and in ready state.
+- [ ] Budget and quota alerts are active for each project.
+- [ ] Team runbook is updated and reviewed.
+- [ ] A reproducible local setup has been validated by at least one additional team member.
+
+### Phase 0 deliverables
+
+- Environment inventory sheet (project IDs, numbers, regions, owners).
+- Versioned Firestore rules and index specification.
+- Local onboarding checklist and `.env` template references.
+- Security/compliance sign-off note for NDPR-aligned data handling.
