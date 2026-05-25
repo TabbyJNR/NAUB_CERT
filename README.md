@@ -425,3 +425,9 @@ A release is production-ready only when all are true:
 3. Finalize contract state model and event schema.
 4. Start Phase 1 implementation artifacts (schema, API contracts, test vectors).
 
+
+### Phase 1 Artifacts (Initial Draft)
+- `docs/phase1/data-dictionary.md`
+- `docs/phase1/hash-canonicalization.md`
+- `docs/phase1/api-contract-openapi.yaml`
+- `docs/phase1/hash-test-vectors.json`

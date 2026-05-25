@@ -1,0 +1,16 @@
+{
+  "schemaVersion": "1.0.0",
+  "algorithm": "keccak256",
+  "vectors": [
+    {
+      "name": "issued-without-expiry",
+      "canonicalJson": "{\"certificate_id\":\"8f3c73fa-75d0-4d8f-bf6b-4f42277e13a1\",\"classification\":\"Second Class Upper\",\"expiry_date\":null,\"issue_date\":\"2026-05-20\",\"issuing_institution\":\"Nigerian Army University Biu\",\"metadata_uri\":\"ipfs://bafybeigdyrsamplecid\",\"program_name\":\"B.Sc. Computer Science\",\"schema_version\":\"1.0.0\"}",
+      "expectedHash": "TBD_GENERATE_WITH_REFERENCE_IMPL"
+    },
+    {
+      "name": "issued-with-expiry",
+      "canonicalJson": "{\"certificate_id\":\"fa8d0472-d5dd-453f-a4b8-86ab4c5fcd1f\",\"classification\":\"Distinction\",\"expiry_date\":\"2030-05-20\",\"issue_date\":\"2026-05-20\",\"issuing_institution\":\"Nigerian Army University Biu\",\"metadata_uri\":\"ipfs://bafybeib76samplecid\",\"program_name\":\"Cybersecurity Professional Certificate\",\"schema_version\":\"1.0.0\"}",
+      "expectedHash": "TBD_GENERATE_WITH_REFERENCE_IMPL"
+    }
+  ]
+}
