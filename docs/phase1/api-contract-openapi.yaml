@@ -1,0 +1,129 @@
+openapi: 3.0.3
+info:
+  title: NAUB Certificate Registry API
+  version: 0.1.0-phase1
+  description: Draft API contract for certificate issuance, verification, and revocation.
+servers:
+  - url: https://staging.example.naub-cert/api
+paths:
+  /certificates:
+    post:
+      summary: Issue a certificate
+      operationId: issueCertificate
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/IssueCertificateRequest'
+      responses:
+        '201':
+          description: Certificate issued
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IssueCertificateResponse'
+  /certificates/{payloadHash}/verify:
+    get:
+      summary: Verify a certificate by payload hash
+      operationId: verifyCertificate
+      parameters:
+        - name: payloadHash
+          in: path
+          required: true
+          schema:
+            type: string
+            pattern: '^0x[a-fA-F0-9]{64}$'
+      responses:
+        '200':
+          description: Verification result
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VerifyCertificateResponse'
+        '404':
+          description: Certificate not found
+  /certificates/{payloadHash}/revoke:
+    post:
+      summary: Revoke a certificate
+      operationId: revokeCertificate
+      parameters:
+        - name: payloadHash
+          in: path
+          required: true
+          schema:
+            type: string
+            pattern: '^0x[a-fA-F0-9]{64}$'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RevokeCertificateRequest'
+      responses:
+        '200':
+          description: Revocation accepted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RevokeCertificateResponse'
+components:
+  schemas:
+    CertificateState:
+      type: string
+      enum: [issued, revoked]
+    IssueCertificateRequest:
+      type: object
+      required:
+        - certificateId
+        - holderName
+        - holderIdType
+        - holderIdValue
+        - programName
+        - issuingInstitution
+        - issueDate
+        - issuedBy
+      properties:
+        certificateId: { type: string, format: uuid }
+        holderName: { type: string }
+        holderIdType:
+          type: string
+          enum: [nin, passport, student_number, employee_id, other]
+        holderIdValue: { type: string }
+        programName: { type: string }
+        issuingInstitution: { type: string }
+        issueDate: { type: string, format: date }
+        expiryDate: { type: string, format: date, nullable: true }
+        classification: { type: string, nullable: true }
+        metadataUri: { type: string, format: uri, nullable: true }
+        issuedBy: { type: string }
+    IssueCertificateResponse:
+      type: object
+      required: [certificateId, payloadHash, status]
+      properties:
+        certificateId: { type: string, format: uuid }
+        payloadHash: { type: string, pattern: '^0x[a-fA-F0-9]{64}$' }
+        status: { $ref: '#/components/schemas/CertificateState' }
+        txHash: { type: string, nullable: true }
+    VerifyCertificateResponse:
+      type: object
+      required: [found, payloadHash]
+      properties:
+        found: { type: boolean }
+        payloadHash: { type: string, pattern: '^0x[a-fA-F0-9]{64}$' }
+        status: { $ref: '#/components/schemas/CertificateState' }
+        issuedAt: { type: string, format: date-time, nullable: true }
+        revokedAt: { type: string, format: date-time, nullable: true }
+    RevokeCertificateRequest:
+      type: object
+      required: [reason, revokedBy]
+      properties:
+        reason: { type: string }
+        revokedBy: { type: string }
+    RevokeCertificateResponse:
+      type: object
+      required: [payloadHash, status]
+      properties:
+        payloadHash: { type: string, pattern: '^0x[a-fA-F0-9]{64}$' }
+        status: { $ref: '#/components/schemas/CertificateState' }
+        txHash: { type: string, nullable: true }
