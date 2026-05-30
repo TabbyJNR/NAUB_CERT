@@ -1,0 +1,22 @@
+{
+  "name": "naub_cert",
+  "version": "1.0.0",
+  "description": "Phase 2 smart contract implementation for the NAUB blockchain certificate system.",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "test": "node --test",
+    "test:contract-static": "node scripts/static-contract-check.js"
+  },
+  "keywords": [
+    "naub",
+    "certificate",
+    "blockchain",
+    "solidity"
+  ],
+  "author": "",
+  "license": "MIT",
+  "type": "commonjs"
+}

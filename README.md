@@ -431,3 +431,10 @@ A release is production-ready only when all are true:
 - `docs/phase1/hash-canonicalization.md`
 - `docs/phase1/api-contract-openapi.yaml`
 - `docs/phase1/hash-test-vectors.json`
+
+### Phase 2 Artifacts (Initial Implementation)
+- `contracts/CertificateRegistry.sol`
+- `test/CertificateRegistry.test.js`
+- `scripts/static-contract-check.js`
+- `docs/phase2/coverage-report.md`
+- `docs/phase2/slither-analysis.md`
